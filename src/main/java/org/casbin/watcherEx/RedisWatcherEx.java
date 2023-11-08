@@ -241,7 +241,8 @@ public class RedisWatcherEx implements WatcherEx {
                     if (msg == null) {
                         System.out.printf("Failed to parse message: %s\n", message);
                     } else {
-                        boolean isSelf = msg.getId().equals(options.getLocalID());
+                        String localID = options.getLocalID() == null? localId: options.getLocalID();
+                        boolean isSelf = msg.getId().equals(localID);
                         if (!options.isIgnoreSelf() || !isSelf) {
                             if (updateCallback instanceof Consumer) {
                                 ((Consumer<String>) updateCallback).accept(message);
